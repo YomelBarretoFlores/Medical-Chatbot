@@ -41,20 +41,19 @@ pc.create_index(
 index = pc.Index(index_name)
 
 
-# Initialize vector store
+
 docsearch = PineconeVectorStore(
     index_name=index_name,
     embedding=embeddings,
     pinecone_api_key=PINECONE_API_KEY  
 )
 
-# Function to divide into batches
+
 def batch_iterate(size, iterable):
-    """Yields batches of the given size from the iterable."""
     for i in range(0, len(iterable), size):
         yield iterable[i : i + size]
 
-# Add documents in batches of 50 to avoid hitting the 4MB limit
+
 print(f"Uploading {len(text_chunks)} chunks in batches...")
 for i, batch in enumerate(batch_iterate(50, text_chunks)):
     print(f"Processing batch {i+1}...")
